@@ -98,7 +98,7 @@ const AddNewLeadScreen = () => {
                             
                             <label htmlFor="leadSource" className="fs-5">Lead Source:</label><br/>
                             <select className="fs-5" id="leadSource" required name="source" onChange={updateNewLeadForm}>
-                                <option selected value={newLeadForm.source}>--select--</option>
+                                <option selected={newLeadForm.source === ''? true: false} value={''}>--select--</option>
                                 <option value={"Website"}>Website</option>
                                 <option value={"Referral"}>Referral</option>
                                 <option value={"Cold Call"}>Cold Call</option>
@@ -109,7 +109,7 @@ const AddNewLeadScreen = () => {
 
                             <label className="fs-5" htmlFor="leadSalesAgent">Sales Agent:</label><br/>
                             <select className="fs-5" id="leadSalesAgent" required name="salesAgent" onChange={updateNewLeadForm}>
-                                <option value={newLeadForm.salesAgent}>--select--</option>
+                                <option selected={newLeadForm.source === ''? true: false} value={''}>--select--</option>
                                 {
                                     allAgentData === "Data not found."? 
                                     <option>No agents found</option> :
@@ -121,7 +121,7 @@ const AddNewLeadScreen = () => {
 
                             <label className="fs-5" htmlFor="leadStatus">Status:</label><br/>
                             <select className="fs-5" id="leadStatus" required name="status" onChange={updateNewLeadForm}>
-                                <option value={newLeadForm.status}>--select--</option>
+                                <option selected={newLeadForm.source === ''? true: false} value={''}>--select--</option>
                                 <option value={"New"}>New</option>
                                 <option value={"Contacted"}>Contacted</option>
                                 <option value={"Qualified"}>Qualified</option>
@@ -137,7 +137,7 @@ const AddNewLeadScreen = () => {
 
                             <label className="fs-5" htmlFor="leadPriority">Priority:</label><br/>
                             <select className="fs-5" id="leadPriority" required name="priority" onChange={updateNewLeadForm}>
-                                <option value={newLeadForm.priority}>--select--</option>
+                                <option selected={newLeadForm.source === ''? true: false} value={''}>--select--</option>
                                 <option value={"High"}>High</option>
                                 <option value={"Medium"}>Medium</option>
                                 <option value={"Low"}>Low</option>  

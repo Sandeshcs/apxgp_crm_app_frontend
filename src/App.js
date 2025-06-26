@@ -65,8 +65,6 @@ function App() {
             <p className="fw-medium fs-3">Main Content</p>
             <hr/>
             <p className="fw-normal fs-4 text-decoration-underline">Lead Names</p>
-            {leadLoading && <p>Loading...</p>}
-            {leadError && <p>{leadError}</p>}
 
             <div className="form-floating mb-3" style={{"maxWidth": "250px"}}>
               <select className="form-select" id="leadStatus" aria-label="Filter By Status" name="status" onChange={updateSelectedFilter}>
@@ -80,6 +78,8 @@ function App() {
               <label htmlFor="leadStatus" className="fw-medium">Filter By Status:</label>
             </div>
 
+            {leadLoading && <p>Loading...</p>}
+            {leadError && <p>{leadError}</p>}
             {
               leadDataToDisplay === "Data not found."? 
               <p className="fs-5 fw-medium">No leads found.</p> : 

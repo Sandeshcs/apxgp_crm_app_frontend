@@ -8,13 +8,14 @@ export default useLeadAgentContext;
 
 export function LeadAgentProvider({children}) {
     //console.log(children)
+    const [refetchSalesagentData, setRefetchSalesagentData] = useState(false);
     const [refetchLeadData, setRefetchLeadData] = useState(false);
     const [refetchCommentData, setRefetchCommentData] = useState(false);
 
     const {loading: leadLoading, data: leadData, error: leadError} = useFetch(`https://apxgp-crm-app-backend.vercel.app/leads?updated=${refetchLeadData}`);
     const allLeadData = leadData? leadData.data || leadData.message : [];
     
-    const {loading: agentLoading, data: agentData, error: agentError} = useFetch(`https://apxgp-crm-app-backend.vercel.app/sales-agent`);
+    const {loading: agentLoading, data: agentData, error: agentError} = useFetch(`https://apxgp-crm-app-backend.vercel.app/sales-agent?updated=${refetchSalesagentData}`);
     const allAgentData = agentData? agentData.data || agentData.message : [];
 
     const {loading: commentLoading, data: commentData, error: commentError} = useFetch(`https://apxgp-crm-app-backend.vercel.app/comments?updated=${refetchCommentData}`);
@@ -26,7 +27,8 @@ export function LeadAgentProvider({children}) {
                 leadLoading, allLeadData, leadError, 
                 agentLoading, allAgentData, agentError, 
                 setRefetchLeadData, setRefetchCommentData,
-                commentLoading, allCommentData, commentError
+                commentLoading, allCommentData, commentError,
+                setRefetchSalesagentData
             }}>
                 {children}
             </LeadAgentContext.Provider>

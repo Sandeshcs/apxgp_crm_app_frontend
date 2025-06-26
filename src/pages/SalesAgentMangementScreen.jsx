@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import useLeadAgentContext from "../context/LeadAgentContext";
 
 const SalesAgentManagementScreen = () => {
-    
     const {agentLoading, allAgentData, agnetError} = useLeadAgentContext();
-    //console.log(allAgentData);
-
+    //const salesDataFetched = data? data.data || data.message : [];
+    console.log(allAgentData);
     return (
         <div>
             <header>
@@ -30,7 +29,7 @@ const SalesAgentManagementScreen = () => {
                             {agentLoading && <p>Loading...</p>}
                             {agnetError && <p>{agnetError}</p>}
                             {
-                                allAgentData === "Data not found."? 
+                                allAgentData === "Data not found." || allAgentData.length === undefined? 
                                 <p className="fs-5 fw-medium">No sales agent found.</p> : (
                                     <div className="row container">
                                         <div className="card col-md-10 rounded-0">
@@ -49,7 +48,6 @@ const SalesAgentManagementScreen = () => {
                                                 </div>
                                             ))
                                         }
-
                                     </div>
                                 )
                             }

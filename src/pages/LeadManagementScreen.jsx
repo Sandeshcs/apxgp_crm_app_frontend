@@ -3,10 +3,10 @@ import useLeadAgentContext from "../context/LeadAgentContext";
 import { useState } from "react";
 
 const LeadManagementScreen = () => {
-    const {leadLoading, allLeadData, leadError, allAgentData, setRefetchLeadData, setRefetchCommentData, allCommentData} = useLeadAgentContext();
+    const {leadLoading, allLeadData, leadError, allAgentData, setRefetchLeadData, setRefetchCommentData, commentLoading, allCommentData, commentError} = useLeadAgentContext();
     //console.log(allCommentData)
-    const [showNewCommentWindow, setShowNewCommentWindow] = useState(false);
-    const [showLeadOrEditWindow, setShowLeadOrEditWindow] = useState(true);
+    const [showOrCloseNewCommentWindow, setShowOrCloseNewCommentWindow] = useState(false);
+    const [showOrCloseLeadOrEditWindow, setShowOrCloseLeadOrEditWindow] = useState(true);
     
     const [alertMessage, setAlertMessage] = useState(false);
 
@@ -26,18 +26,22 @@ const LeadManagementScreen = () => {
         commentText: '',
     });
 
-    const openLeadOrEditWindow = (actionType) => {
+    const openOrCloseLeadOrEditWindow = (actionType) => {
         if(actionType === "open"){
-            setShowLeadOrEditWindow((showLeadOrEditWindow) => !showLeadOrEditWindow);
+            setShowOrCloseLeadOrEditWindow((showOrCloseLeadOrEditWindow) => !showOrCloseLeadOrEditWindow);
             setNewLeadForm({...oneLeadData, salesAgent: oneLeadData.salesAgent._id});
         }else{
-            setShowLeadOrEditWindow((showLeadOrEditWindow) => !showLeadOrEditWindow);
+            setShowOrCloseLeadOrEditWindow((showOrCloseLeadOrEditWindow) => !showOrCloseLeadOrEditWindow);
             setNewLeadForm(null);
         }
     }
 
-    const openNewCommentWindow = () => {
-        setShowNewCommentWindow((showNewCommentWindow) => !showNewCommentWindow);
+    const openOrCloseNewCommentWindow = (actionType) => {
+        if(actionType === "open"){
+            setShowOrCloseNewCommentWindow((showOrCloseNewCommentWindow) => !showOrCloseNewCommentWindow);
+        }else{
+            setShowOrCloseNewCommentWindow((showOrCloseNewCommentWindow) => !showOrCloseNewCommentWindow);
+        }
     }
 
     //function to update lead.
@@ -62,7 +66,7 @@ const LeadManagementScreen = () => {
                 setTimeout(() =>{
                     setAlertMessage((prev) => !prev)
                 }, 3000);
-                openLeadOrEditWindow("close");
+                openOrCloseLeadOrEditWindow("close");
             }
         }
         catch(error){
@@ -106,15 +110,16 @@ const LeadManagementScreen = () => {
             const newCommentData = await response.json();
             if(newCommentData){
                 console.log(newCommentData.message);
-                setRefetchCommentData((prev) => !prev);
                 setAlertMessage((prev) => !prev)
                 setTimeout(() =>{
                     setAlertMessage((prev) => !prev)
                 }, 3000);
+                setRefetchCommentData((prev) => !prev);
                 setNewCommentForm({
                     author: '',
                     commentText: ''
                 });
+                openOrCloseNewCommentWindow("close");
             }
         }
         catch(error){
@@ -168,7 +173,7 @@ const LeadManagementScreen = () => {
                             </div>
                         )}
                         {
-                            showLeadOrEditWindow === true? (
+                            showOrCloseLeadOrEditWindow === true? (
                                 <div>
                                     <p className="fs-5">Name : {oneLeadData.name? oneLeadData.name.charAt(0).toUpperCase()+oneLeadData.name.slice(1, oneLeadData.name.length) : ''}</p>
                                     <p className="fs-5">Source : {oneLeadData.source}</p>
@@ -176,9 +181,9 @@ const LeadManagementScreen = () => {
                                     <p className="fs-5">Status : {oneLeadData.status}</p>
                                     <p className="fs-5">Time To Close : {oneLeadData.timeToClose} Days</p>
                                     <p className="fs-5">Priority : {oneLeadData.priority}</p>
-                                    <button onClick={() => openLeadOrEditWindow('open')} className="btn btn-primary">Edit Lead</button>
+                                    <button onClick={() => openOrCloseLeadOrEditWindow('open')} className="btn btn-primary">Edit Lead</button>
                                 </div>
-                            ) : (
+                                ) : (
                                 <form onSubmit={handleSubmit}>
                                     <label htmlFor="leadName">Lead Name:</label><br/>
                                     <input required type="text" id="leadName" name="name" value={newLeadForm?.name || ''} onChange={updateNewLeadForm}/><br/><br/>
@@ -228,29 +233,12 @@ const LeadManagementScreen = () => {
                                     <input type="date" id="leadClosedAt" name="closedAt" value={newLeadForm?.closedAt || ''} onChange={updateNewLeadForm}/><br/><br/>
 
                                     <button className="btn btn-success" type="submit">Submit</button>
-                                    <button className="btn btn-danger ms-3" onClick={() => openLeadOrEditWindow("close")}>Close</button>
+                                    <button className="btn btn-danger ms-3" onClick={() => openOrCloseLeadOrEditWindow("close")}>Close</button>
                                 </form>
-                            )
+                                )
                         }
                         <hr/>
                         <p className="fw-medium fs-3">Comments Section</p>
-                        <hr/>
-                        
-                            {
-                                commentsOfThisLead && commentsOfThisLead.length > 0 ? (
-                                    commentsOfThisLead.map((comment, index) => (
-                                        <div className="card mb-3" key={index}>
-                                            <div className="card-header position-relative">
-                                                <span className="fs-5">{comment.author.name}</span>
-                                                <span className="fs-5 me-3 position-absolute top-90 end-0">[{comment.createdAt}]</span>
-                                            </div>
-                                            <div className="card-body">
-                                                <p className="fs-5">Comment: {comment.commentText}</p>
-                                            </div>
-                                        </div>
-                                    ))
-                                ): <p>No comments for this lead yet.</p>
-                            }
                         <hr/>
                         {alertMessage && (
                             <div className="w-50 mt-2 alert alert-success" role="alert">
@@ -258,8 +246,8 @@ const LeadManagementScreen = () => {
                             </div>
                         )}
                         {
-                            showNewCommentWindow === false? 
-                                <button className="btn btn-primary" onClick={openNewCommentWindow}>Add New Comment</button> : (
+                            showOrCloseNewCommentWindow === false? 
+                                <button className="btn btn-primary mb-3" onClick={() => openOrCloseNewCommentWindow("open")}>Add New Comment</button> : (
                                     <form onSubmit={handleCommentSubmit}>
                                         <label className="me-2 fs-5" htmlFor="authorOfComment">Author(Sales Agent):</label>
                                         <select id="authorOfComment" required name="author" onChange={updateNewCommentForm}>
@@ -274,10 +262,26 @@ const LeadManagementScreen = () => {
                                         <label htmlFor="commentText" className="fs-5">Comment:</label><br/>
                                         <textarea id="commentText" rows={4} cols={50} required name="commentText" value={newCommentForm.commentText} onChange={updateNewCommentForm}></textarea> <br/><br/>
 
-                                        <button className="btn btn-success" type="submit">Submit</button>
-                                        <button className="btn btn-danger ms-3" onClick={openNewCommentWindow}>Close</button>
+                                        <button className="btn btn-success mb-3" type="submit">Submit</button>
+                                        <button className="btn btn-danger ms-3 mb-3" onClick={() => openOrCloseNewCommentWindow("close")}>Close</button>
                                     </form>
                                 )
+                        }
+                        {commentLoading && <p>Loading...</p>}
+                        {
+                            commentsOfThisLead && commentsOfThisLead.length > 0 ? (
+                                commentsOfThisLead.map((comment, index) => (
+                                    <div className="card mb-3" key={index}>
+                                        <div className="card-header position-relative">
+                                            <span className="fs-5">{comment.author.name}</span>
+                                            <span className="fs-5 me-3 position-absolute top-90 end-0">[{comment.createdAt}]</span>
+                                        </div>
+                                        <div className="card-body">
+                                            <p className="fs-5">Comment: {comment.commentText}</p>
+                                        </div>
+                                    </div>
+                                ))
+                            ): <p className="fs-5 fw-medium">No comments for this lead yet.</p>
                         }
                     </div>
                 </div>
