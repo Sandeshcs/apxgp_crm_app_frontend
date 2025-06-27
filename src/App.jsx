@@ -32,7 +32,7 @@ function App() {
   }, [selectedFilter]);
 
   const fetchFilteredData = (filterData) => {
-      fetch(`https://apxgp-crm-app-backend.vercel.app/leads?${filterData.filtername}=${filterData.data}`)
+      fetch(`http://localhost:3000/leads?${filterData.filtername}=${filterData.data}`)
       .then((response) => response.json())
       .then((data) => {
         data && data.data && data.data.length>0? setLeadDataToDisplay(data.data) : setLeadDataToDisplay(data.message);

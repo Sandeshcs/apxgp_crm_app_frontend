@@ -23,7 +23,6 @@ const CreateNewSalesAgent = () => {
             if(!response.ok){
                 throw "failed to add address";
             }
-            console.log(response, response.json());
             const newSalesAgent = await response.json();
             if(newSalesAgent){
                 console.log(newSalesAgent.message);

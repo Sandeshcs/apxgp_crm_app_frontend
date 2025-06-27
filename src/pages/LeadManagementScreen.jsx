@@ -8,7 +8,8 @@ const LeadManagementScreen = () => {
     const [showOrCloseNewCommentWindow, setShowOrCloseNewCommentWindow] = useState(false);
     const [showOrCloseLeadOrEditWindow, setShowOrCloseLeadOrEditWindow] = useState(true);
     
-    const [alertMessage, setAlertMessage] = useState(false);
+    const [leadUpdatealertMessage, setLeadUpdateAlertMessage] = useState(false);
+    const [newCommentalertMessage, setNewCommentAlertMessage] = useState(false);
 
      //getting specific lead data using allLeadData from context.
     const {leadId} = useParams();
@@ -56,7 +57,7 @@ const LeadManagementScreen = () => {
                     "content-type": "application/json"  
                 }
             });
-            console.log(response, response.json());
+            console.log(response);
             if(!response.ok){
                 throw "failed to update lead";
             }
@@ -64,9 +65,9 @@ const LeadManagementScreen = () => {
             if(updatedLeadData){
                 console.log(updatedLeadData.message);
                 setRefetchLeadData((prev) => !prev);
-                setAlertMessage((prev) => !prev)
+                setLeadUpdateAlertMessage((prev) => !prev)
                 setTimeout(() =>{
-                    setAlertMessage((prev) => !prev)
+                    setLeadUpdateAlertMessage((prev) => !prev)
                 }, 3000);
                 openOrCloseLeadOrEditWindow("close");
             }
@@ -106,16 +107,16 @@ const LeadManagementScreen = () => {
                     "content-type": "application/json"  
                 }
             });
-            console.log(response, response.json());
+            console.log(response);
             if(!response.ok){
                 throw "failed to add new comment";
             }
             const newCommentData = await response.json();
             if(newCommentData){
                 console.log(newCommentData.message);
-                setAlertMessage((prev) => !prev)
+                setNewCommentAlertMessage((prev) => !prev)
                 setTimeout(() =>{
-                    setAlertMessage((prev) => !prev)
+                    setNewCommentAlertMessage((prev) => !prev)
                 }, 3000);
                 setRefetchCommentData((prev) => !prev);
                 setNewCommentForm({
@@ -170,7 +171,7 @@ const LeadManagementScreen = () => {
                         <hr/>
                         {leadLoading && <p>Loading...</p>}
                         {leadError && <p>{leadError}</p>}
-                        {alertMessage && (
+                        {leadUpdatealertMessage && (
                             <div className="w-50 mt-3 alert alert-success" role="alert">
                                 Lead updated.
                             </div>
@@ -243,7 +244,7 @@ const LeadManagementScreen = () => {
                         <hr/>
                         <p className="fw-medium fs-3">Comments Section</p>
                         <hr/>
-                        {alertMessage && (
+                        {newCommentalertMessage && (
                             <div className="w-50 mt-2 alert alert-success" role="alert">
                                 New Comment Added.
                             </div>
@@ -271,6 +272,7 @@ const LeadManagementScreen = () => {
                                 )
                         }
                         {commentLoading && <p>Loading...</p>}
+                        {commentError && <p>{commentError}</p>}
                         {
                             commentsOfThisLead && commentsOfThisLead.length > 0 ? (
                                 commentsOfThisLead.map((comment, index) => (

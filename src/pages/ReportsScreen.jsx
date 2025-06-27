@@ -8,7 +8,7 @@ Chart.register(CategoryScale);
 
 const ReportsScreen = () => {
     //fetching data from usecontext.
-    const {allLeadData, allAgentData} = useLeadAgentContext();
+    const {allLeadData} = useLeadAgentContext();
     //console.log(allLeadData);
 
     const leadsClosed = allLeadData.length > 0 ? allLeadData.reduce((acc, curr) => curr.status === "Closed"? ++acc: acc, 0) : 0;

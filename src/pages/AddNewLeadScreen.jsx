@@ -31,7 +31,7 @@ const AddNewLeadScreen = () => {
             if(!response.ok){
                 throw "failed to add new lead";
             }
-            console.log(response, response.json());
+            console.log(response);
             const newLeadData = await response.json();
             if(newLeadData){
                 console.log(newLeadData.message);
