@@ -16,7 +16,7 @@ const AddNewLeadScreen = () => {
     const [newLeadAlert, setNewLeadAlert] = useState(false);
 
     const {allAgentData} = useLeadAgentContext();
-    console.log(allAgentData)
+    //console.log(allAgentData)
 
     //function to add new lead.
     const newLeadCreated = async (leadData) => {
@@ -31,6 +31,7 @@ const AddNewLeadScreen = () => {
             if(!response.ok){
                 throw "failed to add new lead";
             }
+            console.log(response, response.json());
             const newLeadData = await response.json();
             if(newLeadData){
                 console.log(newLeadData.message);

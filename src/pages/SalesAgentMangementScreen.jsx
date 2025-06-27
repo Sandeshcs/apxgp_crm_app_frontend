@@ -3,8 +3,7 @@ import useLeadAgentContext from "../context/LeadAgentContext";
 
 const SalesAgentManagementScreen = () => {
     const {agentLoading, allAgentData, agnetError} = useLeadAgentContext();
-    //const salesDataFetched = data? data.data || data.message : [];
-    console.log(allAgentData);
+    //console.log(allAgentData);
     return (
         <div>
             <header>
@@ -31,19 +30,13 @@ const SalesAgentManagementScreen = () => {
                             {
                                 allAgentData === "Data not found." || allAgentData.length === undefined? 
                                 <p className="fs-5 fw-medium">No sales agent found.</p> : (
-                                    <div className="row container">
-                                        <div className="card col-md-10 rounded-0">
-                                            <div className="card-header row">
-                                                <span className="fs-5 col-md-3 fw-medium">NAME</span>
-                                                <span className="fs-5 col-md-7 fw-medium">EMAIL</span>
-                                            </div>
-                                        </div>
+                                    <div className="row">
                                         {
                                             allAgentData && allAgentData.length > 0 && allAgentData.map((salesAgent, index) => (
-                                                <div className="card col-md-10 rounded-0" key={index}>
-                                                    <div className="card-body row">
-                                                        <span className="fs-5 col-md-3">{salesAgent.name}</span>
-                                                        <span className="fs-5 col-md-7">{salesAgent.email}</span>
+                                                <div className="card col-md-3 ms-3 mb-3" key={index}>
+                                                    <div className="card-body">
+                                                        <p><span className="fw-medium">Name: </span>{salesAgent.name}</p>
+                                                        <p><span className="fw-medium">Email: </span>{salesAgent.email}</p>
                                                     </div>
                                                 </div>
                                             ))

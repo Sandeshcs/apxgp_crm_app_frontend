@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     setLeadDataToDisplay(allLeadData);
   }, [allLeadData]);
-  console.log(leadDataToDisplay)
+  //console.log(leadDataToDisplay)
 
   const noOfNewLeads = leadDataToDisplay === "Data not found."? 0 :leadDataToDisplay.reduce((acc, curr) => curr.status === "New"? ++acc:acc, 0);
   const noOfContactedLeads = leadDataToDisplay === "Data not found."? 0 :leadDataToDisplay.reduce((acc, curr) => curr.status === "Contacted"? ++acc:acc, 0);

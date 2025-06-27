@@ -18,7 +18,7 @@ const LeadListScreen = () => {
     useEffect(() => {
         setLeadDataToDisplay(allLeadData);
     }, [allLeadData]);
-    console.log(allLeadData, allAgentData)
+    //console.log(allLeadData, allAgentData)
 
     const updateSelectedFilter = (event, filterOrSortType) => {
         const {name, value} = event.target;
@@ -54,7 +54,7 @@ const LeadListScreen = () => {
         .catch((error) => console.log(error));
     };
 
-    console.log(leadDataToDisplay)
+    //console.log(leadDataToDisplay)
 
     return (
         <div>
@@ -76,8 +76,8 @@ const LeadListScreen = () => {
                         <p className="fw-medium fs-3">Lead Overview</p>
                         <hr/>
                         
-                        <div className="row">
-                            <div className="form-floating mb-3" style={{"maxWidth": "250px"}}>
+                        <div className="row mb-3">
+                            <div className="form-floating" style={{"maxWidth": "250px"}}>
                                 <select className="form-select" aria-label="Filter by status" id="leadStatus" name="status" onChange={(event) => updateSelectedFilter(event, "filter")}>
                                     <option selected value={""}>-- select status --</option>
                                     <option value={'New'}>New</option>
@@ -106,8 +106,8 @@ const LeadListScreen = () => {
                             <div className="form-floating" style={{"maxWidth": "250px"}}>
                                 <select className="form-select" id="leadStatus" aria-label="Sort By Priority" name="priority" onChange={(event) => updateSelectedFilter(event, "sort")}>
                                     <option selected value={''}>-- select sorting --</option>
-                                    <option value={"asc"}>High To Low</option>
-                                    <option value={"des"}>Low To High</option> 
+                                    <option value={"des"}>High To Low</option>
+                                    <option value={"asc"}>Low To High</option> 
                                 </select>     
                                 <label className="ms-2 fw-medium" htmlFor="leadStatus">Sort By Priority:</label>
                             </div>
@@ -127,25 +127,17 @@ const LeadListScreen = () => {
                         {
                             leadDataToDisplay === "Data not found."? 
                             <p className="fs-5 fw-medium">No leads found.</p> : (
-                            <div className="row container col-md-12">
-                                <div className="card rounded-0">
-                                    <div className="card-body row">
-                                        <span className="fs-5 col-md-3 fw-medium">NAME</span>
-                                        <span className="fs-5 col-md-2 fw-medium">STATUS</span>
-                                        <span className="fs-5 col-md-3 fw-medium">SALES AGENT</span>
-                                        <span className="fs-5 col-md-2 fw-medium">PRIORITY</span>
-                                        <span className="fs-5 col-md-2 fw-medium">TIME TO CLOSE</span>
-                                    </div>
-                                </div>
+                            <div className="row col-md-12">
                                 {
                                     leadDataToDisplay && leadDataToDisplay.length > 0 && leadDataToDisplay.map((lead, index) => (
-                                    <div className="card rounded-0" key={index}>
-                                        <div className="card-body row">
-                                            <span className="fs-5 col-md-3">{lead.name}</span>
-                                            <span className="fs-5 col-md-2">{lead.status}</span>
-                                            <span className="fs-5 col-md-3">{lead.salesAgent.name}</span>
-                                            <span className="fs-5 col-md-2">{lead.priority}</span>
-                                            <span className="fs-5 col-md-2">{lead.timeToClose} Days</span>
+                                    <div className="card mb-3 col-md-3 ms-3" key={index}>
+                                        <div className="card-body">
+                                            <h4 className="card-title">{lead.name}</h4>
+                                            <p className=""><span className="fw-medium">Source: </span>{lead.source}</p>
+                                            <p className=""><span className="fw-medium">Status: </span>{lead.status}</p>
+                                            <p className=""><span className="fw-medium">Sales Agent: </span>{lead.salesAgent.name}</p>
+                                            <p className=""><span className="fw-medium">Priority: </span>{lead.priority}</p>
+                                            <p className=""><span className="fw-medium">Time To Close: </span>{lead.timeToClose} Days</p>
                                         </div>
                                     </div>
                                 ))
@@ -153,7 +145,6 @@ const LeadListScreen = () => {
                             </div>
                             )
                         }
-                        <hr/>
                         
                         <Link className="btn btn-primary" to={'/addNewLead'}>Add New Lead</Link>
                     </div>

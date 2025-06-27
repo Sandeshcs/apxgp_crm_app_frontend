@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLeadAgentContext from "../context/LeadAgentContext";
-import SalesAgentManagementScreen from "./SalesAgentMangementScreen";
 
 const CreateNewSalesAgent = () => {
     const [salesAgentForm, setSalesAgentForm] = useState({
         name: '',
         email: ''
     });
-    const {setRefetchSalesagentData} = useLeadAgentContext();
 
     const [newSalesAgentALert, setNewSalesAgentALert] = useState(false);
     //function to create new sales agent.
@@ -25,6 +23,7 @@ const CreateNewSalesAgent = () => {
             if(!response.ok){
                 throw "failed to add address";
             }
+            console.log(response, response.json());
             const newSalesAgent = await response.json();
             if(newSalesAgent){
                 console.log(newSalesAgent.message);

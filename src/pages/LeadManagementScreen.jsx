@@ -18,7 +18,8 @@ const LeadManagementScreen = () => {
         }
         return acc;
     }, {});
-    console.log(oneLeadData);
+    //console.log(oneLeadData);
+
     const [newLeadForm, setNewLeadForm] = useState(null);
     const [newCommentForm, setNewCommentForm] = useState({
         lead: leadId,
@@ -55,6 +56,7 @@ const LeadManagementScreen = () => {
                     "content-type": "application/json"  
                 }
             });
+            console.log(response, response.json());
             if(!response.ok){
                 throw "failed to update lead";
             }
@@ -104,6 +106,7 @@ const LeadManagementScreen = () => {
                     "content-type": "application/json"  
                 }
             });
+            console.log(response, response.json());
             if(!response.ok){
                 throw "failed to add new comment";
             }
