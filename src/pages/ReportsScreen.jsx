@@ -36,7 +36,7 @@ const ReportsScreen = () => {
             <header>
                 <nav className="navbar navbar-expand-lg bg-body-tertiary">
                     <div className="container-fluid position-relative py-3">
-                        <p className="navbar-brand position-absolute top-50 start-50 translate-middle fs-2">Anvaya CRM Reports</p>
+                        <p className="navbar-brand position-absolute top-50 start-50 translate-middle fs-2">APXGP CRM Reports</p>
                     </div>
                 </nav>
             </header>

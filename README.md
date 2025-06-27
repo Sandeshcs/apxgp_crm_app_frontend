@@ -1,70 +1,160 @@
-# Getting Started with Create React App
+# APXGP CRM APP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A lead and sales agent management app where you can display, add, update leads and sales agent and perform filter and sortby and can add comments.
 
-## Available Scripts
+Built with React.js frontend, Express.js/Node.js backend, MongoDB database.
 
-In the project directory, you can run:
+---
+## App Demo Link
 
-### `npm start`
+[App Live Demo](https://apxgp-crm-app-frontend.vercel.app/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Qucik Start
 
-### `npm test`
+```
+git clone https://github.com/Sandeshcs/apxgp_crm_app_frontend.git
+cd apxgp_crm_app_frontend
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Technologies
+- React.js
+- React Router
+- Node.js
+- Express.js
+- MongoDB
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## App Demo Video
+Watch a walkthrough ( ) of all the major features of this app:
+[App Demo Video]()
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Features
+**Dashboard**
+- Display of all leads (only lead names, if u click any lead name it will display full details of that lead).
+- Filter leads by status.
+- Lead status distribution.
+- Button to add new lead.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Leads**
+- Display of all leads(name, status, source, priority, sales agent, time to close).
+- Filter leads by status, sales agent.
+- Sortby priority, time to close.
+- Button to add new lead.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Individual Lead Management And Comment Section**
+- In dashboard if u click anyone lead name you will see this page which displays details of each lead(name, sales agent, source, status, priority, time to close).
+- Edit/update lead details button (name, sales agent, source, status, priority, time to close).
+- Add new comment button (add name, email).
+- Display of all comments of this lead only (display author name, comment, data and time).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Add New Lead**
+- Form with fields - name, source, sales agent, status, priority, time to close.
+- Submit button.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Sales Agent Management**
+- Display of all sales agent (name, email).
+- Add new sales agent button.
 
-## Learn More
+**Add New Sales Agent**
+- Form with fields - name, email.
+- Submit button.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Reports Screen**
+- Leads closed and leads in the pipeline (doughnut chart).
+- Leads closed by sales agent (bar chart).
+- Lead status distribution (doughnut chart).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Leads View By Status**
+- Display of leads by default display leads of status **new**.
+- Filter by status, sales agent, priority.
+- Sort by time to close.
 
-### Code Splitting
+**Leads View By Sales Agent**
+- Display of leads by default display leads of sales agent is **suraj**.
+- Filter by sales agent, status, priority.
+- Sort by time to close.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## API Reference
+### GET /api/leads
+Display all leads.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Sample Resopnse:
+```
+[{_id, name, status, source, salesAgent, tags, timeToClose, priority, createdAt, updatedAt, closedAt}, ...]
+```
+### POST /api/leads
+Post lead data when we click submit button in add new lead form.
 
-### Making a Progressive Web App
+Sample Resopnse:
+```
+{_id, name, status, source, salesAgent, tags, timeToClose, priority, createdAt, updatedAt, closedAt}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### POST(update) /api/leads/:leadId
+Update lead data when we click submit in edit/update lead button in individual lead management and comment section.
 
-### Advanced Configuration
+Sample Resopnse:
+```
+{_id, name, status, source, salesAgent, tags, timeToClose, priority, createdAt, updatedAt, closedAt}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### GET /api/sales-agent
+Display all sales agent.
 
-### Deployment
+Sample Resopnse:
+```
+[{_id, name, email}, ...]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### POST /api/sales-agent
+Post new sales agent when we click submit in add new sales agent form.
 
-### `npm run build` fails to minify
+Sample Resopnse:
+```
+{_id, name, email}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### GET /api/leads?filterOneName=filterOneValue&filterTwoName=filterTwoValue&filterThreeName=filterThreeValue&sortby=sortByName&order=des/asc
+- Display all leads based on filter and sortby and order.
+- If no filter, sortby, order selected then all leads are displayed.
+
+Sample Resopnse:
+```
+[{_id, name, status, source, salesAgent, tags, timeToClose, priority, createdAt, updatedAt closedAt}, ...]
+```
+
+### GET /api/comments/
+Fetch all comments then we filter and display comments of specific lead.
+
+Sample Response:
+
+```
+[{_id, lead(means leadId used to filter), author, commentText}, ...]
+```
+* Lead in sample means leadId used to filter and display comments of specific lead.
+* Author means sales agent who commented.
+
+---
+
+## POST /api/comments
+Post new comment when submit button clicked.
+
+Sample Response:
+
+```
+{_id, lead, author, commentText}
+```
+
+## Contact
+For bugs or feature request please reach out to sandeshcs2921@gmail.com.

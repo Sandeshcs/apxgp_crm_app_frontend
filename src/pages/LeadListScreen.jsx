@@ -106,8 +106,8 @@ const LeadListScreen = () => {
                             <div className="form-floating" style={{"maxWidth": "250px"}}>
                                 <select className="form-select" id="leadStatus" aria-label="Sort By Priority" name="priority" onChange={(event) => updateSelectedFilter(event, "sort")}>
                                     <option selected value={''}>-- select sorting --</option>
-                                    <option value={"des"}>High To Low</option>
-                                    <option value={"asc"}>Low To High</option> 
+                                    <option value={"asc"}>High To Low</option>
+                                    <option value={"des"}>Low To High</option> 
                                 </select>     
                                 <label className="ms-2 fw-medium" htmlFor="leadStatus">Sort By Priority:</label>
                             </div>

@@ -45,7 +45,7 @@ function App() {
       <header>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
           <div className="container-fluid position-relative py-4">
-            <p className="navbar-brand position-absolute top-50 start-50 translate-middle fs-2">Anvaya CRM Dashboard</p>
+            <p className="navbar-brand position-absolute top-50 start-50 translate-middle fs-2">APXGP CRM Dashboard</p>
           </div>
         </nav>
       </header>
@@ -84,7 +84,7 @@ function App() {
               leadDataToDisplay === "Data not found."? 
               <p className="fs-5 fw-medium">No leads found.</p> : 
               leadDataToDisplay && leadDataToDisplay.length > 0 && leadDataToDisplay.map((lead, index) => (
-              <Link className="btn btn-outline-dark me-3" to={`/leadManagement/${lead._id}`}>
+              <Link className="btn btn-outline-info me-3" to={`/leadManagement/${lead._id}`}>
                 <small key={index} className="fs-5">{lead.name}</small>
               </Link>
               ))
@@ -98,7 +98,7 @@ function App() {
                 <span className="col-md-3 fw-medium">CONTACTED</span>
                 <span className="col-md-2 fw-medium">QUALIFIED</span>
                 <span className="col-md-3 fw-medium">PROPOSAL SENT</span>
-                <span className="col-md-2 fw-medium">OTHER</span>
+                <span className="col-md-2 fw-medium">CLOSED</span>
               </div>
               <div className="card-body row">
                   <span className="fs-5 col-md-2">{noOfNewLeads} Leads</span>
